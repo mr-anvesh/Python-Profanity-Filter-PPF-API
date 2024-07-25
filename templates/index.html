@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profanity Filter</title>
+</head>
+<body>
+    <h1>Profanity Filter</h1>
+    <form action="/filter" method="POST">
+        <label for="text">Enter text to filter:</label><br>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if filtered_text %}
+    <h2>Filtered Text:</h2>
+    <p>{{ filtered_text }}</p>
+    {% endif %}
+</body>
+</html>
