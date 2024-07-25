@@ -42,8 +42,3 @@ if __name__ == "__main__":
     file_path = 'badwords.txt'  # Change to the path of your .txt file
     words = read_words_from_file(file_path)
     insert_words_into_db(words)
-
-
-
-
-
