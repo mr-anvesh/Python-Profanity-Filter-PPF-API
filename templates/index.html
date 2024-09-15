@@ -4,17 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profanity Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 50px;
+            text-align: center;
+        }
+        #filter-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Profanity Filter</h1>
-    <form action="/filter" method="POST">
-        <label for="text">Enter text to filter:</label><br>
-        <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
-        <input type="submit" value="Submit">
+
+    <h1>Text Filter</h1>
+    <form id="filter-form">
+        <input type="text" id="user-text" placeholder="Enter text to filter">
+        <button type="submit">Filter Text</button>
     </form>
-    {% if filtered_text %}
-    <h2>Filtered Text:</h2>
-    <p>{{ filtered_text }}</p>
-    {% endif %}
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('filter-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            let userInput = document.getElementById('user-text').value;
+
+            let response = await fetch('/filter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: userInput })
+            });
+
+            if (response.ok) {
+                let result = await response.json();
+                document.getElementById('result').textContent = "Filtered Text: " + result.filteredText;
+            } else {
+                document.getElementById('result').textContent = "Error: Unable to process the text.";
+            }
+        });
+    </script>
 </body>
 </html>
